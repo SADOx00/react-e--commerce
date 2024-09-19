@@ -27,7 +27,7 @@ const Header = () => {
             prefix={<SearchOutlined />}
           />
         </div>
-        <div className="bg-white py-3 md:py-0 left-0 bottom-0 md:bg-transparent md:w-auto w-screen menu-links md:static flex justify-between items-center gap-8 fixed md:px-0 px-4 md:border-t-0 md border-t">
+        <div className="bg-white py-3 md:py-0 left-0 bottom-0 md:bg-transparent md:w-auto w-screen menu-links md:static flex justify-between items-center gap-8 fixed z-50 md:px-0 px-4 md:border-t-0 md border-t">
           <a
             href="/"
             className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
