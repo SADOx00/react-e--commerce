@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Select, Space, Button, Card } from "antd";
+import { Form, Input, Modal, Select, Button, Card } from "antd";
 import FormItem from "antd/es/form/FormItem";
 const onFinish = (value) => {
   console.log(value);

@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../components/header";
 import { Button, Table } from "antd";
 import { Card, Space } from "antd";
-import { Modal } from "antd";
 import { useState } from "react";
 import PrintBill from "../components/bills/PrintBill";
 

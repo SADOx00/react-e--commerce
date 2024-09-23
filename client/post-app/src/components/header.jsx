@@ -60,7 +60,7 @@ const Header = () => {
             <span className="text-[10px] md:text-xs">Müşteriler</span>
           </Link>
           <Link
-            to="/"
+            to="/statistic"
             className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
           >
             <DataSaverOffOutlinedIcon className="md:text-2xl text-xl" />

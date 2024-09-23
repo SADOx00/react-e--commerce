@@ -60,7 +60,7 @@ const Cart = () => {
         </div>
 
         <div className="border-2 border-b-black">
-          <div className="flex p-2 justify-between p-2">
+          <div className="flex p-2 justify-between ">
             <b className="text-xg text-green-500">GenelToplam</b>
             <span className="text-xl">99₺</span>
           </div>
