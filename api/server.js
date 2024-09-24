@@ -1,10 +1,16 @@
 const app = require("express")();
+const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const PORT = 5000;
+const cors = require("cors");
+
+// routes
+
+const categoryRoute = require("./routes/categorties");
+const productRoute = require("./routes/products");
 
 dotenv.config();
-
 const con = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -13,11 +19,16 @@ const con = async () => {
     throw error;
   }
 };
+
+// middlewares
+
+app.use(express.json());
+app.use(cors());
+
+app.use("/api/categories", categoryRoute);
+app.use("/api/products", productRoute);
+
 app.listen(PORT, () => {
   con();
   console.log("App is listening on port " + PORT);
-});
-
-app.get("/", (req, res) => {
-  res.send("HEllo maum");
 });
