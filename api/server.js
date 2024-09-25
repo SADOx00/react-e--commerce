@@ -9,6 +9,8 @@ const cors = require("cors");
 
 const categoryRoute = require("./routes/categorties");
 const productRoute = require("./routes/products");
+const billRoute = require("./routes/bill");
+const authRoute = require("./routes/auth");
 
 dotenv.config();
 const con = async () => {
@@ -27,6 +29,8 @@ app.use(cors());
 
 app.use("/api/categories", categoryRoute);
 app.use("/api/products", productRoute);
+app.use("/api/bill", billRoute);
+app.use("/api/auth", authRoute);
 
 app.listen(PORT, () => {
   con();
