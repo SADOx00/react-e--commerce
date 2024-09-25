@@ -21,8 +21,15 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     !user && res.status(404).send({ error: "User Not Found" });
-    res.send(user);
-    res.status(200).json("the user logined acces");
+
+    const vaildPassword = await bc.compare(req.body.password, user.password);
+
+    if (!vaildPassword) {
+      res.status(403).send("invalid password");
+    } else {
+      res.status(200).json("the user logined acces");
+      res.send(user);
+    }
   } catch (error) {
     res.status(400).json(error);
   }
