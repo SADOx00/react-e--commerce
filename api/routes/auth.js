@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
     await newuser.save();
     res.status(200).json("A new user created Succesfully");
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 });
 
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
       res.send(user);
     }
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 });
 

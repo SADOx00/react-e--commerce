@@ -11,6 +11,7 @@ const categoryRoute = require("./routes/categorties");
 const productRoute = require("./routes/products");
 const billRoute = require("./routes/bill");
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/users");
 
 dotenv.config();
 const con = async () => {
@@ -31,6 +32,7 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/products", productRoute);
 app.use("/api/bill", billRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 app.listen(PORT, () => {
   con();
