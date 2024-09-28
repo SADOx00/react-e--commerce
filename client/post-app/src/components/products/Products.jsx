@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ProductItem from "./ProductItem";
+import { PlusCircleOutlined } from "@ant-design/icons";
+const Products = ({ categ }) => {
+  const [products, setProducts] = useState([]);
 
-const Products = () => {
+  useEffect(() => {
+    const getCateg = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/products/get-all");
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCateg();
+  }, []);
+
   return (
-    <main className=" grid grid-cols-card gap-4 products-wrapper">
-      <article className="products-item border hover:shadow-lg cursor-pointer transition-all ">
-        <div className="product-img ">
-          <img
-            className="h-28 border-b w-full object-cover"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/220px-Red_Apple.jpg"
-            alt="apple"
-          />
-        </div>
-        <div className="product-info flex p-3 flex-col">
-          <span className="font-bold">ELma</span>
-          <span> 18₺</span>
-        </div>
-      </article>
-    </main>
+    <>
+      {" "}
+      <ProductItem
+        products={products}
+        setProducts={setProducts}
+        categ={categ}
+        data={products}
+      />
+    </>
   );
 };
 

@@ -11,7 +11,15 @@ const HomePage = () => {
       try {
         const res = await fetch("http://localhost:5000/api/categories/get-all");
         const data = await res.json();
-        setCateg(data);
+        data &&
+          setCateg(
+            data.map((item) => {
+              return {
+                ...item,
+                value: item.title,
+              };
+            })
+          );
       } catch (error) {
         console.log(error);
       }
@@ -26,7 +34,7 @@ const HomePage = () => {
           <Categories categ={categ} setCateg={setCateg} />
         </section>
         <section className="products flex-[8] max-h-[calc(100vh-100px)] overflow-y-auto pb-10 ">
-          <Products />
+          <Products categ={categ} />
         </section>
         <section className=" border md:pb-0 pb-24 cart-total min-w-[300px] md:-mt-[24px] md:-mr-[24px]">
           <Cart />
