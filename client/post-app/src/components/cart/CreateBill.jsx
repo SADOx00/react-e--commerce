@@ -1,9 +1,31 @@
-import { Form, Input, Modal, Select, Button, Card } from "antd";
+import { Form, Input, Modal, Select, Button, Card, message } from "antd";
 import FormItem from "antd/es/form/FormItem";
-const onFinish = (value) => {
-  console.log(value);
-};
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
+  const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const onFinish = (value) => {
+    console.log(value);
+    try {
+      fetch("http://localhost:5000/api/bill/add-bll", {
+        method: "POST",
+        body: JSON.stringify({
+          ...value,
+          subtotal: cart.total,
+          tax: cart.tax,
+          totalAmount: cart.total + cart.tax,
+          cardItems: cart.cartItems,
+        }),
+        headers: { "Content-type": "application/json; charset = UTF-8" },
+      });
+      message.success("Fatura olusturma basarılıç");
+      navigate("/bills");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Modal

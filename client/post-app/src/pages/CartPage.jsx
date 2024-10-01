@@ -3,11 +3,22 @@ import Header from "../components/header";
 import { Button, Table } from "antd";
 import { Card, Space } from "antd";
 import { useState } from "react";
-import CreateBill from "../components/cart/CreateBill";
 
+import CreateBill from "../components/cart/CreateBill";
+import { useSelector, useDispatch } from "react-redux";
+import { delPrd } from "../redux/cartSlice";
 const CartPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const handleClick = (value) => {
+    let answer = window.confirm("Ürünü Silmek İstediğinize Emin misiniz?");
+    if (answer) {
+      dispatch(delPrd(value));
+    }
+  };
   const dataSource = [
     {
       key: "1",
@@ -24,19 +35,51 @@ const CartPage = () => {
   ];
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Görsel",
+      width: "125px",
+      dataIndex: "img",
+      key: "img",
+      render: (text) => {
+        return <img src={text} alt="" className="w-full h-20 object-cover" />;
+      },
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "Ürün Adı",
+      dataIndex: "title",
+      key: "title",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Kategory",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
+      title: "Fiyat",
+      dataIndex: "price",
+      key: "price",
+      render: (text, record) => {
+        return <span>{record.price * record.quantity}₺</span>;
+      },
+    },
+    {
+      title: "Adet",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (text) => {
+        return <span>{text}</span>;
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "button",
+      key: "button",
+      render: (_, text) => {
+        return (
+          <Button onClick={() => handleClick(text)} type="link">
+            Sİl
+          </Button>
+        );
+      },
     },
   ];
 
@@ -47,7 +90,7 @@ const CartPage = () => {
         <Table
           pagination={false}
           bordered
-          dataSource={dataSource}
+          dataSource={cart.cartItems}
           columns={columns}
         />
         <div className="cart-total flex justify-end">
@@ -67,7 +110,9 @@ const CartPage = () => {
               </div>
               <Button
                 type="primary"
-                onClick={(e) => setIsModalOpen(true)}
+                onClick={(e) => {
+                  setIsModalOpen(true);
+                }}
                 className="mt-4 w-full"
               >
                 Sipariş oluştur

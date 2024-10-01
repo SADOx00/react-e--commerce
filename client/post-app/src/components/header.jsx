@@ -9,9 +9,11 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Input, Badge } from "antd";
+import { useSelector } from "react-redux";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 const Header = () => {
+  const cart = useSelector((state) => state.cart);
   return (
     <div className="border-b mb-6 ">
       <header className="gap-7 py-4 px-6 flex justify-between items-center">
@@ -36,7 +38,7 @@ const Header = () => {
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">Anasayfa</span>
           </Link>
-          <Badge className="md:flex hidden" count={5}>
+          <Badge className="md:flex hidden" count={cart.cartItems.length}>
             <Link
               to="/cart"
               className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center "
