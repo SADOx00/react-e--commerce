@@ -2,7 +2,7 @@ import React from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 const Header = () => {
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   return (
     <div className="border-b mb-6 ">
@@ -68,13 +69,26 @@ const Header = () => {
             <DataSaverOffOutlinedIcon className="md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">İstatis</span>
           </Link>
-          <Link
-            to="/"
-            className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+          <div
+            onClick={() => {
+              let answer = window.confirm(
+                "Are you sure you want to exit this session?"
+              );
+              if (answer) {
+                localStorage.removeItem("popUser");
+                navigate("/login");
+              }
+            }}
+            className="text-[10px] md:text-xs"
           >
-            <LogoutOutlinedIcon className="md:text-2xl text-xl" />
-            <span className="text-[10px] md:text-xs">Çıkış</span>
-          </Link>
+            <Link
+              to="/"
+              className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+            >
+              <LogoutOutlinedIcon className="md:text-2xl text-xl" />
+              <span>Çıkış</span>
+            </Link>
+          </div>
         </div>
         <Badge className="md:hidden flex" count={5}>
           <Link

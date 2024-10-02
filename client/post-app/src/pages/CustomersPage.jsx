@@ -1,37 +1,39 @@
-import React from "react";
 import Header from "../components/header";
 import { Table } from "antd";
+import React, { useEffect, useState } from "react";
 
 const CustomersPage = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+  const [bills, setBills] = useState([]);
+
+  useEffect(() => {
+    const getBills = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/bill/get-all`);
+        setBills(await res.json());
+      } catch (error) {}
+    };
+
+    getBills();
+  }, []);
+
   const columns = [
     {
       title: "Name",
-      dataIndex: "name",
+      dataIndex: "CustomerName",
       key: "name",
     },
     {
-      title: "Age",
-      dataIndex: "age",
+      title: "Telephone",
+      dataIndex: "CustomerTel",
       key: "age",
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Last entered",
+      dataIndex: "createdAt",
       key: "address",
+      render: (text) => {
+        return <span>{text.substring(1, 10)}</span>;
+      },
     },
   ];
 
@@ -43,7 +45,7 @@ const CustomersPage = () => {
         <Table
           pagination={false}
           bordered
-          dataSource={dataSource}
+          dataSource={bills}
           columns={columns}
         />
       </div>

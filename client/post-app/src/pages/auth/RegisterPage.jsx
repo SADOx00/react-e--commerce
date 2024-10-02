@@ -1,19 +1,46 @@
-import { Button, Form, Input } from "antd";
-import React from "react";
+import { Button, Form, Input, message } from "antd";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "antd";
 import Responsive from "./images/responsive.svg";
 import Custom from "./images/customer.svg";
 import Admin from "./images/admin.svg";
 import Statistic from "./images/statistic.svg";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const [load, setLoad] = useState(false);
+  const onFinish = async (values) => {
+    setLoad(true);
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8", // Buradaki hatayı düzelttik
+        },
+        body: JSON.stringify(values), // body kısmını doğru konuma aldık
+      });
+
+      // Eğer sunucu başarılı bir yanıt dönerse
+      setLoad(false);
+      if (response.ok) {
+        message.success("Register Success");
+        navigate("/login");
+      } else {
+        message.error("Register Failure");
+      }
+    } catch (error) {
+      message.error("Bizden Kaynaklanan Sorun Var.");
+    }
+  };
+
   return (
     <main className="h-screen">
       <article className="flex justify-between h-full">
         <section className="left relative xl:w-2/6 w-full px-10 xl:px-20 flex min-w-[400px] flex-col h-full justify-center">
           <h1 className="text-center text-5xl font-bold mb-3">LOGO</h1>
-          <Form layout="vertical">
+          <Form onFinish={onFinish} layout="vertical">
             <Form.Item
               name="username"
               rules={[
@@ -52,19 +79,29 @@ const RegisterPage = () => {
             </Form.Item>
             <Form.Item
               name="r-password"
-              dependencies={"password"}
+              dependencies={["password"]} // Burayı düzeltin
               rules={[
                 {
                   required: true,
                   message: "Lütfen Tekrar Şifrenizi Giriniz!",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("Şifreler eşleşmiyor!"));
+                  },
+                }),
               ]}
               label="Tekrar Şifre"
             >
               <Input.Password />
             </Form.Item>
+
             <Form.Item>
               <Button
+                loading={load}
                 className="w-full"
                 size="large"
                 htmlType="submit"

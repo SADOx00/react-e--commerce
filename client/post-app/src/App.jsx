@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import BillPage from "./pages/BillPage";
@@ -12,7 +12,17 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
+
+        <Route
+          path="/cart"
+          element={
+            <RouteController>
+              {" "}
+              {/* NOTE - Heryere Böyle Kontrol Ekleyebilirsin */}
+              <CartPage />
+            </RouteController>
+          }
+        />
         <Route path="/bills" element={<BillPage />} />
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/statistic" element={<Statistic />} />
@@ -24,3 +34,11 @@ function App() {
 }
 
 export default App;
+
+export const RouteController = ({ children }) => {
+  if (localStorage.getItem("popUser")) {
+    return children;
+  } else {
+    return <Navigate to={"/login"} />;
+  }
+};
