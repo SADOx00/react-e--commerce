@@ -2,7 +2,7 @@ import React from "react";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DataSaverOffOutlinedIcon from "@mui/icons-material/DataSaverOffOutlined";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -14,6 +14,7 @@ import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const cart = useSelector((state) => state.cart);
   return (
     <div className="border-b mb-6 ">
@@ -34,7 +35,9 @@ const Header = () => {
         <div className="bg-white py-3 md:py-0 left-0 bottom-0 md:bg-transparent md:w-auto w-screen menu-links md:static flex justify-between items-center gap-8 fixed z-50 md:px-0 px-4 md:border-t-0 md border-t">
           <Link
             to="/"
-            className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+            className={`menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center ${
+              pathname === "/" && "actice"
+            }`}
           >
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">Anasayfa</span>
@@ -42,7 +45,9 @@ const Header = () => {
           <Badge className="md:flex hidden" count={cart.cartItems.length}>
             <Link
               to="/cart"
-              className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center "
+              className={`menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center ${
+                pathname === "/cart" && "actice"
+              }`}
             >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="text-[10px] md:text-xs">Sepet</span>
@@ -50,21 +55,27 @@ const Header = () => {
           </Badge>
           <Link
             to="/bills"
-            className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+            className={`menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center ${
+              pathname === "/bills" && "actice"
+            }`}
           >
             <ReceiptLongOutlinedIcon className="  md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">Faturalar</span>
           </Link>
           <Link
             to="/customers"
-            className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+            className={`menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center ${
+              pathname === "/customers" && "actice"
+            }`}
           >
             <PersonOutlineOutlinedIcon className="md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">Müşteriler</span>
           </Link>
           <Link
             to="/statistic"
-            className="menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center"
+            className={`menu-link hover:text-[#40a9ff] transition-all flex flex-col items-center ${
+              pathname === "/statistic" && "actice"
+            }`}
           >
             <DataSaverOffOutlinedIcon className="md:text-2xl text-xl" />
             <span className="text-[10px] md:text-xs">İstatis</span>

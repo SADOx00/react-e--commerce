@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
@@ -7,7 +7,13 @@ import CustomersPage from "./pages/CustomersPage";
 import Statistic from "./pages/Statistic";
 import RegisterPage from "./pages/auth/RegisterPage";
 import Login from "./pages/auth/Login";
+import { useSelector } from "react-redux";
 function App() {
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
   return (
     <BrowserRouter>
       <Routes>

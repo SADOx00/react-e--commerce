@@ -13,7 +13,7 @@ const Edit = ({ categ, setCateg, isEditModalOpen, setIsEditModalOpen }) => {
     if (editingRow._id === record._id) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/categories/upd-cat",
+          process.env.REACT_APP_SERVER_URL + "/api/categories/upd-cat",
           {
             method: "PUT",
             body: JSON.stringify({
@@ -46,7 +46,7 @@ const Edit = ({ categ, setCateg, isEditModalOpen, setIsEditModalOpen }) => {
   const handleClick_2 = async (record) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/categories/del-cat",
+        process.env.REACT_APP_SERVER_URL + "/api/categories/del-cat",
         {
           method: "DELETE",
           body: JSON.stringify({

@@ -2,17 +2,6 @@ import { Button, Modal } from "antd";
 import React, { useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 
-class ComponentToPrint extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Yazdırılacak İçerik</h1>
-        <p>Bu içerik yazdırılacaktır.</p>
-      </div>
-    );
-  }
-}
-
 const PrintBill = ({ customer, isModalOpen, setIsModalOpen }) => {
   const componentRef = useRef();
 

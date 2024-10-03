@@ -9,7 +9,7 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   const onFinish = (value) => {
     console.log(value);
     try {
-      fetch("http://localhost:5000/api/bill/add-bll", {
+      fetch(process.env.REACT_APP_SERVER_URL + "/api/bill/add-bll", {
         method: "POST",
         body: JSON.stringify({
           ...value,

@@ -14,13 +14,16 @@ const RegisterPage = () => {
   const onFinish = async (values) => {
     setLoad(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8", // Buradaki hatayı düzelttik
-        },
-        body: JSON.stringify(values), // body kısmını doğru konuma aldık
-      });
+      const response = await fetch(
+        process.env.REACT_APP_SERVER_URL + "/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8", // Buradaki hatayı düzelttik
+          },
+          body: JSON.stringify(values), // body kısmını doğru konuma aldık
+        }
+      );
 
       // Eğer sunucu başarılı bir yanıt dönerse
       setLoad(false);
